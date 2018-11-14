@@ -1,21 +1,37 @@
 const eldingar = new Eldingar();
 
 eldingar.setup({
-	version: 1.0,
-	paths: {
-		views: 'App/view/',
-		parts: 'App/component/script/',
-		templates: 'App/component/template/'
-	},
+	cacheVersion: 1.0,
+	path: {
+		view: 'App/views',
+		component: 'App/components/script',
+		template: 'App/components/template'
+	}
 });
 
+eldingar.getTemplate('navbar/default', function(template){
+	Vue.component('navbar-default', {
+		data: function () {
+			return {
+				brand: 'EldingarJS Vue',
+				links: []
+			}
+		},
+		template: template
+	});
+	new Vue({ el: '#navbar' });
+});
 
+eldingar.getTemplate('footer/sticky', function(template){
+	Vue.component('footer-sticky', {
+	  	data: function () {
+	    	return {
+	      		count: 0
+	    	}
+	  	},
+	  	template: template
+	});
+	new Vue({ el: '#footer' });
+});
 
-
-if(eld.route.view){
-    eld.view.init(eld.route.view);
-} else {
-    eld.view.init('home');
-}
-
-eld.build();
+eldingar.changeView('home');
